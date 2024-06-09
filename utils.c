@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 10:56:33 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/06/08 13:30:50 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:18:26 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	is_digit(char *s)
 	return (true);
 }
 
-size_t	convert_time(char *time)
+size_t	_to_size_t(char *time)
 {
 	int		i;
 	size_t	res;
