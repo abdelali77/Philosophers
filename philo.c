@@ -15,9 +15,9 @@
 void	vars_init(t_philo *philo)
 {
 	philo->num_philos = 0;
-	philo->time_die = 0;
-	philo->time_eat = 0;
-	philo->time_sleep = 0;
+	philo->time_to_die = 0;
+	philo->time_to_eat = 0;
+	philo->time_to_sleep = 0;
 }
 
 void	convert_args(t_philo *philo, char **arg)
@@ -26,11 +26,11 @@ void	convert_args(t_philo *philo, char **arg)
 	if (is_digit(arg[1]))
 		philo->num_philos = _to_size_t(arg[1]);
 	if (is_digit(arg[2]))
-		philo->time_die = _to_size_t(arg[2]);
+		philo->time_to_die = _to_size_t(arg[2]);
 	if (is_digit(arg[3]))
-		philo->time_eat = _to_size_t(arg[3]);
+		philo->time_to_eat = _to_size_t(arg[3]);
 	if (is_digit(arg[4]))
-		philo->time_sleep = _to_size_t(arg[4]);
+		philo->time_to_sleep = _to_size_t(arg[4]);
 }
 
 int	main(int ac, char **av)
