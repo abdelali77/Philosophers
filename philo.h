@@ -22,11 +22,10 @@
 
 typedef struct s_philo
 {
-	pthread_t	thread;
 	size_t		num_philos;
-	size_t		time_die;
-	size_t		time_eat;
-	size_t		time_sleep;
+	size_t		time_to_die;
+	size_t		time_to_eat;
+	size_t		time_to_sleep;
 }	t_philo;
 
 bool	is_digit(char *s);
