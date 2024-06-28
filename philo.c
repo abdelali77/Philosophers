@@ -20,17 +20,26 @@ void	vars_init(t_philo *philo)
 	philo->time_to_sleep = 0;
 }
 
-void	convert_args(t_philo *philo, char **arg)
+bool	convert_args(t_philo *philo, char **arg)
 {
 	vars_init(philo);
 	if (is_digit(arg[1]))
 		philo->num_philos = _to_size_t(arg[1]);
+	else
+		return (false);
 	if (is_digit(arg[2]))
 		philo->time_to_die = _to_size_t(arg[2]);
+	else
+		return (false);
 	if (is_digit(arg[3]))
 		philo->time_to_eat = _to_size_t(arg[3]);
+	else
+		return (false);
 	if (is_digit(arg[4]))
 		philo->time_to_sleep = _to_size_t(arg[4]);
+	else
+		return (false);
+	return (true);
 }
 
 int	main(int ac, char **av)
@@ -42,7 +51,8 @@ int	main(int ac, char **av)
 		philo = malloc(sizeof(t_philo));
 		if (!philo)
 			return (printf("Allocation Error\n"), 1);
-		convert_args(philo, av);
+		if (!convert_args(philo, av))
+			return (printf("Error\n"), 1);
 	}
 	else
 		printf("\033[0;33mUsage: ./philo [number_of_philosophers]" 
