@@ -13,7 +13,7 @@
 NAME = philo
 
 CC 	   = cc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -lpthread
 
 VIVID_RED=\033[38;2;226;3;56m
 NC=\033[0m
