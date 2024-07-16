@@ -53,8 +53,8 @@ struct s_data
 	t_philo	*philos; // Array of all the philos
 };
 
-
 bool	is_digit(char *s);
 size_t	_to_size_t(char *time);
+bool	check_args(char **av);
 
 #endif
