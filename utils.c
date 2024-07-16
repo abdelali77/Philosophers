@@ -37,3 +37,17 @@ size_t	_to_size_t(char *time)
 	}
 	return (res);
 }
+
+bool	check_args(char **av)
+{
+	int	i;
+
+	i = 1;
+	while (av[i])
+	{
+		if (!is_digit(av[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
