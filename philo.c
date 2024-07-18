@@ -36,6 +36,5 @@ int	main(int ac, char **av)
 	else
 		printf("\033[0;33mUsage: ./philo [number_of_philosophers]" 
 			"[time_to_die] [time_to_eat] [time_to_sleep]\033[0;33m\n");
-	printf("%zu %zu %zu %zu %ld\n", data.nbr_philos, data.time_to_die, data.time_to_eat, data.time_to_sleep, data.meals_needed);
 	return (0);
 }
