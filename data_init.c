@@ -12,7 +12,13 @@
 
 #include "philo.h"
 
-void    data_init(t_data *data)
+void	data_init(t_data *data)
 {
-    data->end_simulation = false;
+	data->end_simulation = false;
+	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
+	if (!data->philos)
+		exit(1); // FORBIDDEN
+	data->forks = malloc(data->nbr_philos * sizeof(t_fork));
+	if (!data->forks)
+		exit(1); // FORBIDDEN
 }
