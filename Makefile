@@ -20,7 +20,7 @@ NC=\033[0m
 
 HEADER = philo.h
 
-SRC = philo.c utils.c
+SRC = philo.c utils.c data_init.c
 
 OBJ = $(SRC:.c=.o)
 
