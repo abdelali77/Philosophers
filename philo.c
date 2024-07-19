@@ -34,7 +34,7 @@ int	main(int ac, char **av)
 		convert_args(&data, av, ac);
 	}
 	else
-		printf("\033[0;33mUsage: ./philo [number_of_philosophers]" 
-			"[time_to_die] [time_to_eat] [time_to_sleep]\033[0;33m\n");
+		printf("\033[0;33mUsage: ./philo [number_of_philosophers]"
+			   "[time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat]\033[0;33m\n");
 	return (0);
 }
