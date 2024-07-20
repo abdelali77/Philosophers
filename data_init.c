@@ -14,11 +14,17 @@
 
 void	data_init(t_data *data)
 {
+	int	i;
+
+	i = -1;
 	data->end_simulation = false;
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
-	if (!data->philos)
-		exit(1); // FORBIDDEN
+	// PROTECT THE MALLOC !!
 	data->forks = malloc(data->nbr_philos * sizeof(t_fork));
-	if (!data->forks)
-		exit(1); // FORBIDDEN
+	// PROTECT THE MALLOC !!
+	while (++i < data->nbr_philos)
+	{
+		/* code */
+		data->forks[i].fork_id = i;
+	}
 }
