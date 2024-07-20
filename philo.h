@@ -42,7 +42,7 @@ typedef struct s_philo
 
 struct s_data
 {
-	size_t	nbr_philos;
+	int		nbr_philos;
 	size_t	time_to_die;
 	size_t	time_to_eat;
 	size_t	time_to_sleep;
