@@ -19,9 +19,9 @@ void	data_init(t_data *data)
 	i = -1;
 	data->end_simulation = false;
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
-	// PROTECT THE MALLOC !!
+	// PROTECT MALLOC !!
 	data->forks = malloc(data->nbr_philos * sizeof(t_fork));
-	// PROTECT THE MALLOC !!
+	// PROTECT MALLOC !!
 	while (++i < data->nbr_philos)
 	{
 		/* code */
