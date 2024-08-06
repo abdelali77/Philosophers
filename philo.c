@@ -25,13 +25,16 @@ void	convert_args(t_data *data, char **arg, int ac)
 
 int	main(int ac, char **av)
 {
-	t_data	data;
+	t_data	*data;
 
 	if (ac == 5 || ac == 6)
 	{
+		data = malloc(sizeof(t_data));
+		if (!data)
+			return(1);
 		if (!check_args(av))
 			return (printf("Error\n"), 1);
-		convert_args(&data, av, ac);
+		convert_args(data, av, ac);
 	}
 	else
 		printf("\033[0;33mUsage: ./philo [number_of_philosophers]"
