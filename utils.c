@@ -12,42 +12,31 @@
 
 #include "philo.h"
 
-bool	is_digit(char *s)
-{
-	while (*s)
-	{
-		if (!(*s >= '0' && *s <= '9'))
-			return (false);
-		s++;
-	}
-	return (true);
-}
-
-size_t	_to_size_t(char *time)
+long	_ft_atol(char *time)
 {
 	int		i;
-	size_t	res;
+	long	res;
 
 	i = 0;
 	res = 0;
+	if (time[i] == '+')
+		i++;
 	while (time[i])
 	{
+		if (!(time[i] >= '0' && time[i] <= '9'))
+			return (-1);
 		res = res * 10 + (time[i] - '0');
 		i++;
 	}
+	if (res > INT_MAX)
+		return (-1);
 	return (res);
 }
 
-bool	check_args(char **av)
+long	get_time()
 {
-	int	i;
+	struct timeval	t;
 
-	i = 1;
-	while (av[i])
-	{
-		if (!is_digit(av[i]))
-			return (false);
-		i++;
-	}
-	return (true);
+	gettimeofday(&t, NULL);
+	return ((t.tv_sec * 1000) - (t.tv_usec / 1000));
 }
