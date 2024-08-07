@@ -12,15 +12,28 @@
 
 #include "philo.h"
 
-void	convert_args(t_data *data, char **arg, int ac)
+bool	convert_args(t_data *data, char **arg, int ac)
 {
 	data->meals_needed = -1;
-	data->nbr_philos = _to_size_t(arg[1]);
-	data->time_to_die = _to_size_t(arg[2]);
-	data->time_to_eat = _to_size_t(arg[3]);
-	data->time_to_sleep = _to_size_t(arg[4]);
+	if (_ft_atol(arg[1]) <= 0)
+		return (false);
+	data->nbr_philos = _ft_atol(arg[1]);
+	if (_ft_atol(arg[2]) <= 0)
+		return (false);
+	data->time_to_die = _ft_atol(arg[2]);
+	if (_ft_atol(arg[3]) <= 0)
+		return (false);
+	data->time_to_eat = _ft_atol(arg[3]);
+	if (_ft_atol(arg[4]) <= 0)
+		return (false);
+	data->time_to_sleep = _ft_atol(arg[4]);
 	if (ac == 6)
-		data->meals_needed = _to_size_t(arg[5]);
+	{
+		if (_ft_atol(arg[5]) <= 0)
+			return (false);
+		data->meals_needed = _ft_atol(arg[5]);
+	}
+	return (true);
 }
 
 int	main(int ac, char **av)
@@ -32,9 +45,8 @@ int	main(int ac, char **av)
 		data = malloc(sizeof(t_data));
 		if (!data)
 			return(1);
-		if (!check_args(av))
+		if (!convert_args(data, av, ac))
 			return (printf("Error\n"), 1);
-		convert_args(data, av, ac);
 	}
 	else
 		printf("\033[0;33mUsage: ./philo [number_of_philosophers]"
