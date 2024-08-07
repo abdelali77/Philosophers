@@ -19,6 +19,7 @@
 # include <stdbool.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct s_data t_data;
 
@@ -43,18 +44,16 @@ typedef struct s_philo
 struct s_data
 {
 	int		nbr_philos;
-	size_t	time_to_die;
-	size_t	time_to_eat;
-	size_t	time_to_sleep;
+	long	time_to_die;
+	long	time_to_eat;
+	long	time_to_sleep;
 	long	meals_needed; // the last param || flag if -1
-	size_t	start_simulation;
+	long	start_simulation;
 	bool	end_simulation;
 	t_fork	*forks; // Array of all the forks
 	t_philo	*philos; // Array of all the philos
 };
 
-bool	is_digit(char *s);
-size_t	_to_size_t(char *time);
-bool	check_args(char **av);
+long	_ft_atol(char *time);
 
 #endif
