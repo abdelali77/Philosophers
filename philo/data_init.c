@@ -12,8 +12,14 @@
 
 #include "philo.h"
 
+bool	philo_init(t_data *data)
+{
+	
+}
+
 bool	data_init(t_data *data)
 {
+	pthread_mutex_t	f;
 	int	i;
 
 	i = -1;
@@ -26,8 +32,9 @@ bool	data_init(t_data *data)
 		return (false);
 	while (++i < data->nbr_philos)
 	{
-		/* code */
 		data->forks[i].fork_id = i;
+		data->forks[i].fork = pthread_mutex_init(f, NULL);
 	}
+	philo_init(data);
 	return (true);
 }
