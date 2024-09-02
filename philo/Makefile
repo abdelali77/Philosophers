@@ -6,14 +6,14 @@
 #    By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 16:40:32 by abmahfou          #+#    #+#              #
-#    Updated: 2024/06/09 20:07:34 by abmahfou         ###   ########.fr        #
+#    Updated: 2024/09/02 13:09:13 by abmahfou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC 	   = cc
-CFLAGS = -Wall -Wextra -Werror -lpthread
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 VIVID_RED=\033[38;2;226;3;56m
 NC=\033[0m
