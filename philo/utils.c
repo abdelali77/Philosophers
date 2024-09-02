@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 10:56:33 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/06/09 20:18:26 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:54:44 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ long	_ft_atol(char *time)
 	return (res);
 }
 
-long	get_time()
+long	get_time(void)
 {
 	struct timeval	t;
 
