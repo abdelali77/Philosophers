@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:59:13 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/06/09 20:27:56 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:51:12 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int ac, char **av)
 	{
 		data = malloc(sizeof(t_data));
 		if (!data)
-			return(1);
+			return (1);
 		if (!convert_args(data, av, ac))
 			return (printf("Error\n"), 1);
 		if (!data_init(data))
@@ -52,6 +52,7 @@ int	main(int ac, char **av)
 	}
 	else
 		printf("\033[0;33mUsage: ./philo [number_of_philosophers]"
-			   "[time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat]\033[0;33m\n");
+			"[time_to_die] [time_to_eat] [time_to_sleep]"
+			"[number_of_times_each_philosopher_must_eat]\033[0;33m\n");
 	return (0);
 }

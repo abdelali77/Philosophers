@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:59:22 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/06/09 20:23:37 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:51:15 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <unistd.h>
 # include <limits.h>
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_fork
 {
@@ -35,7 +35,7 @@ typedef struct s_philo
 	int			id;
 	long		meals_eaten;
 	bool		is_full;
-	long		last_meal_time; // time passed from last meal ⌚
+	long		last_meal_time;
 	t_fork		*left_fork;
 	t_fork		*right_fork;
 	t_data		*data;
@@ -47,11 +47,11 @@ struct s_data
 	long	time_to_die;
 	long	time_to_eat;
 	long	time_to_sleep;
-	long	meals_needed; // the last param || flag if -1
+	long	meals_needed;
 	long	start_simulation;
 	bool	end_simulation;
-	t_fork	*forks; // Array of all the forks
-	t_philo	*philos; // Array of all the philos
+	t_fork	*forks;
+	t_philo	*philos;
 };
 
 long	_ft_atol(char *time);
