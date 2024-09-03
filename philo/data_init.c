@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:14:09 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/09/02 18:37:16 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:37:51 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ void	*routine()
 bool	philo_init(t_data *data)
 {
 	int	i;
-	
+
 	i = -1;
 	while (++i < data->nbr_philos)
 	{
-		pthread_create(&data->philos->thread, NULL, &routine, NULL);
+		data->philos[i].philo_id = i;
+		data->philos[i].is_full = false;
+		data->philos[i].meals_eaten = 0;
+		pthread_create(&data->philos[i].thread, NULL, &routine, NULL);
+		pthread_join(data->philos[i].thread, NULL);
 	}
 	return (true);
 }
