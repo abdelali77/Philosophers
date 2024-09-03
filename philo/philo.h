@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:59:22 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/09/02 14:51:15 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:36:52 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	pthread_t	thread;
-	int			id;
+	pthread_t	thread; 
+	int			philo_id;
 	long		meals_eaten;
 	bool		is_full;
 	long		last_meal_time;
