@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:59:13 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/09/02 16:51:12 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:53:48 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	main(int ac, char **av)
 	{
 		data = malloc(sizeof(t_data));
 		if (!data)
-			return (1);
+			return (printf("Malloc Error\n"), 1);
 		if (!convert_args(data, av, ac))
-			return (printf("Error\n"), 1);
+			return (printf("Enter a valid argument\n"), 1);
 		if (!data_init(data))
 			return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:14:09 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/09/03 17:37:51 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:46:06 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ bool	data_init(t_data *data)
 	data->end_simulation = false;
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
 	if (!data->philos)
-		return (false);
+		return (printf("Malloc ERROR\n"), false);
 	data->forks = malloc(data->nbr_philos * sizeof(t_fork));
 	if (!data->forks)
-		return (false);
+		return (printf("Malloc ERROR\n"), false);
 	while (++i < data->nbr_philos)
 	{
 		data->forks[i].fork_id = i;
