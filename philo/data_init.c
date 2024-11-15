@@ -6,30 +6,32 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:14:09 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/11/14 11:46:06 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/11/15 20:53:04 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*routine()
-{
-	printf("thread created\n");
-	return NULL;
-}
-
 bool	philo_init(t_data *data)
 {
-	int	i;
+	int		i;
+	t_philo	*philo;
 
 	i = -1;
 	while (++i < data->nbr_philos)
 	{
-		data->philos[i].philo_id = i;
-		data->philos[i].is_full = false;
-		data->philos[i].meals_eaten = 0;
-		pthread_create(&data->philos[i].thread, NULL, &routine, NULL);
-		pthread_join(data->philos[i].thread, NULL);
+		philo = data->philos + i;
+		philo->data = data;
+		philo->philo_id = i + 1;
+		philo->meals_eaten = 0;
+		philo->is_full = false;
+		philo->left_fork = &data->forks[i];
+		philo->right_fork = &data->forks[(i + 1) % philo->data->nbr_philos];
+		if (philo->data->nbr_philos % 2 == 0)
+		{
+			philo->right_fork = &data->forks[i];
+			philo->left_fork = &data->forks[(i + 1) % philo->data->nbr_philos];
+		}
 	}
 	return (true);
 }
@@ -49,7 +51,7 @@ bool	data_init(t_data *data)
 	while (++i < data->nbr_philos)
 	{
 		data->forks[i].fork_id = i;
-		pthread_mutex_init(&data->forks[i].fork, NULL);
+		mutex_handle(&data->forks[i].fork, INIT);
 	}
 	philo_init(data);
 	return (true);

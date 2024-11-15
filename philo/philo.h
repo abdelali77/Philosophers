@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:59:22 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/09/03 17:36:52 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/11/15 20:53:59 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ typedef struct s_fork
 	pthread_mutex_t	fork;
 	int				fork_id;
 }				t_fork;
+
+enum e_op
+{
+	INIT,
+	DESTROY,
+	LOCK,
+	UNLOCK,
+	CREATE,
+	JOIN,
+	DETACH,
+};
 
 typedef struct s_philo
 {
@@ -56,5 +67,8 @@ struct s_data
 
 long	_ft_atol(char *time);
 bool	data_init(t_data *data);
+void	mutex_handle(pthread_mutex_t *mutex, enum e_op op);
+void	thread_handle(pthread_t *thrd, void *(*start_routine)(void *),
+			void *data, enum e_op op);
 
 #endif

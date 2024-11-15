@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:59:13 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/11/13 16:53:48 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:49:17 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ bool	convert_args(t_data *data, char **arg, int ac)
 	if (_ft_atol(arg[4]) <= 0)
 		return (false);
 	data->time_to_sleep = _ft_atol(arg[4]);
+	data->meals_needed = -1;
 	if (ac == 6)
 	{
 		if (_ft_atol(arg[5]) <= 0)
