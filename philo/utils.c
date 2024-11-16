@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 10:56:33 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/09/02 14:54:44 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/11/16 12:50:14 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,15 @@ long	get_time(void)
 	struct timeval	t;
 
 	gettimeofday(&t, NULL);
-	return ((t.tv_sec * 1000) - (t.tv_usec / 1000));
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+}
+
+int	ft_usleep(size_t milliseconds)
+{
+	size_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < milliseconds)
+		usleep(500);
+	return (0);
 }

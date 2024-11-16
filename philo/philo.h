@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:59:22 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/11/15 20:53:59 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/11/16 13:07:25 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <unistd.h>
 # include <limits.h>
 
+# define RED "\033[1;31m"
+# define YELLOW "\033[0;33m"
+
 typedef struct s_data	t_data;
 
 typedef struct s_fork
@@ -29,7 +32,7 @@ typedef struct s_fork
 	int				fork_id;
 }				t_fork;
 
-enum e_op
+typedef enum e_op
 {
 	INIT,
 	DESTROY,
@@ -38,7 +41,7 @@ enum e_op
 	CREATE,
 	JOIN,
 	DETACH,
-};
+}			t_op;
 
 typedef struct s_philo
 {
@@ -67,8 +70,10 @@ struct s_data
 
 long	_ft_atol(char *time);
 bool	data_init(t_data *data);
-void	mutex_handle(pthread_mutex_t *mutex, enum e_op op);
+void	mutex_handle(pthread_mutex_t *mutex, t_op op);
 void	thread_handle(pthread_t *thrd, void *(*start_routine)(void *),
-			void *data, enum e_op op);
+			void *data, t_op op);
+int		ft_usleep(size_t milliseconds);
+long	get_time(void);
 
 #endif

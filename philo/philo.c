@@ -6,7 +6,7 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:59:13 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/11/15 11:49:17 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/11/16 10:23:34 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	convert_args(t_data *data, char **arg, int ac)
 	data->meals_needed = -1;
 	if (ac == 6)
 	{
-		if (_ft_atol(arg[5]) <= 0)
+		if (_ft_atol(arg[5]) < 0)
 			return (false);
 		data->meals_needed = _ft_atol(arg[5]);
 	}
@@ -50,10 +50,12 @@ int	main(int ac, char **av)
 			return (printf("Enter a valid argument\n"), 1);
 		if (!data_init(data))
 			return (1);
+		if (data->meals_needed == 0)
+			return (printf(RED"at least one meal needed\n"RED), 1);
 	}
 	else
-		printf("\033[0;33mUsage: ./philo [number_of_philosophers]"
+		printf(YELLOW"Usage: ./philo [number_of_philosophers]"
 			"[time_to_die] [time_to_eat] [time_to_sleep]"
-			"[number_of_times_each_philosopher_must_eat]\033[0;33m\n");
+			"[number_of_times_each_philosopher_must_eat]\n"YELLOW);
 	return (0);
 }

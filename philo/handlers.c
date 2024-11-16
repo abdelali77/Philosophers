@@ -6,13 +6,13 @@
 /*   By: abmahfou <abmahfou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 20:52:50 by abmahfou          #+#    #+#             */
-/*   Updated: 2024/11/15 20:53:08 by abmahfou         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:50:45 by abmahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	mutex_handle(pthread_mutex_t *mutex, enum e_op op)
+void	mutex_handle(pthread_mutex_t *mutex, t_op op)
 {
 	if (op == INIT)
 	{
@@ -39,7 +39,7 @@ void	mutex_handle(pthread_mutex_t *mutex, enum e_op op)
 }
 
 void	thread_handle(pthread_t *thrd, void *(*start_routine)(void *),
-			void *data, enum e_op op)
+			void *data, t_op op)
 {
 	if (op == INIT)
 	{
