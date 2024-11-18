@@ -12,10 +12,22 @@
 
 #include "philo.h"
 
-void	*routine(void *data)
+void	routine_one(void *data)
 {
-	(void)data;
-	printf("i'm thread\n");
+	
+}
+
+void	one_philo(t_data *data)
+{
+	thread_handle(&data->philos[0].thread, routine_one, NULL, CREATE);
+	thread_handle(&data->philos[0].thread, routine_one, NULL, JOIN);
+}
+
+void	*dinner_simulation(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
 	return (NULL);
 }
 
@@ -25,7 +37,7 @@ void	wait_philosophers(t_data *data)
 
 	i = -1;
 	while (++i < data->nbr_philos)
-		thread_handle(&data->philos[i].thread, routine, NULL, JOIN);
+		thread_handle(&data->philos[i].thread, dinner_simulation, NULL, JOIN);
 }
 
 void	dinner_start(t_data *data)
@@ -34,10 +46,10 @@ void	dinner_start(t_data *data)
 
 	i = -1;
 	if (data->nbr_philos == 1)
-		routine(data);
+		one_philo(data);
 	else
 	{
 		while (++i < data->nbr_philos)
-			thread_handle(&data->philos[i].thread, routine, &data->philos[i], CREATE);
+			thread_handle(&data->philos[i].thread, dinner_simulation, &data->philos[i], CREATE);
 	}
 }

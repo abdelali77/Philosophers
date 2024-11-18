@@ -33,7 +33,7 @@ long	_ft_atol(char *time)
 	return (res);
 }
 
-long	get_time(void)
+long	get_curr_time(void)
 {
 	struct timeval	t;
 
@@ -45,8 +45,8 @@ int	ft_usleep(size_t milliseconds)
 {
 	size_t	start;
 
-	start = get_time();
-	while ((get_time() - start) < milliseconds)
+	start = get_curr_time();
+	while ((get_curr_time() - start) < milliseconds)
 		usleep(500);
 	return (0);
 }

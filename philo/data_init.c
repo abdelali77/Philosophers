@@ -25,6 +25,7 @@ bool	philo_init(t_data *data)
 		philo->philo_id = i + 1;
 		philo->meals_eaten = 0;
 		philo->is_full = false;
+		philo->last_meal_time = get_curr_time();
 		philo->left_fork = &data->forks[i];
 		philo->right_fork = &data->forks[(i + 1) % philo->data->nbr_philos];
 		if (philo->data->nbr_philos % 2 == 0)

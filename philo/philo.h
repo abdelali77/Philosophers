@@ -26,12 +26,6 @@
 
 typedef struct s_data	t_data;
 
-typedef struct s_fork
-{
-	pthread_mutex_t	fork;
-	int				fork_id;
-}				t_fork;
-
 typedef enum e_op
 {
 	INIT,
@@ -42,6 +36,21 @@ typedef enum e_op
 	JOIN,
 	DETACH,
 }			t_op;
+
+typedef enum e_status
+{
+	THINK,
+	SLEEP,
+	EAT,
+	DEAD,
+	TAKE,
+}			e_status;
+
+typedef struct s_fork
+{
+	pthread_mutex_t	fork;
+	int				fork_id;
+}				t_fork;
 
 typedef struct s_philo
 {
@@ -74,6 +83,6 @@ void	mutex_handle(pthread_mutex_t *mutex, t_op op);
 void	thread_handle(pthread_t *thrd, void *(*start_routine)(void *),
 			void *data, t_op op);
 int		ft_usleep(size_t milliseconds);
-long	get_time(void);
+long	get_curr_time(void);
 
 #endif
