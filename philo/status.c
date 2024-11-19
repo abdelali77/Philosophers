@@ -40,6 +40,7 @@ void	ft_print_status(t_philo *philo, e_status status)
 	if (philo->is_full)
 		return ;
 	timestamp = get_curr_time() - philo->data->start_simulation;
+	mutex_handle(&philo->data->print_mtx, LOCK);
 	if (status == EAT)
 		printf("%ld %d is eating\n", timestamp, philo->philo_id);
 	else if (status == SLEEP)
@@ -50,4 +51,5 @@ void	ft_print_status(t_philo *philo, e_status status)
 		printf("%ld %d has taken a fork\n", timestamp, philo->philo_id);
 	else if (status == DEAD)
 		printf("%ld %d "RED"died"RESET"\n", timestamp, philo->philo_id);
+	mutex_handle(&philo->data->print_mtx, UNLOCK);
 }

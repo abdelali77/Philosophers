@@ -82,6 +82,7 @@ struct s_data
 	pthread_mutex_t	sync_mtx;
 	pthread_mutex_t start_mtx;
 	pthread_mutex_t	end_sml_mtx;
+	pthread_mutex_t	print_mtx;
 	t_fork			*forks;
 	t_philo			*philos;
 };

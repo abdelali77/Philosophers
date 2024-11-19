@@ -51,6 +51,7 @@ bool	data_init(t_data *data)
 	mutex_handle(&data->sync_mtx, INIT);
 	mutex_handle(&data->start_mtx, INIT);
 	mutex_handle(&data->end_sml_mtx, INIT);
+	mutex_handle(&data->print_mtx, INIT);
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
 	if (!data->philos)
 		return (printf("Malloc ERROR\n"), false);
