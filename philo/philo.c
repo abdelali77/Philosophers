@@ -39,23 +39,21 @@ bool	convert_args(t_data *data, char **arg, int ac)
 
 int	main(int ac, char **av)
 {
-	t_data	*data;
+	t_data	data;
 
 	if (ac == 5 || ac == 6)
 	{
-		data = malloc(sizeof(t_data));
-		if (!data)
-			return (printf("Malloc Error\n"), 1);
-		if (!convert_args(data, av, ac))
+		if (!convert_args(&data, av, ac))
 			return (printf("Enter a valid argument\n"), 1);
-		if (!data_init(data))
+		if (!data_init(&data))
 			return (1);
-		if (data->meals_needed == 0)
-			return (printf(RED"at least one meal needed\n"RED), 1);
+		if ((&data)->meals_needed == 0)
+			return (printf(RED"at least one meal needed\n"RESET), 1);
+		dinner_start(&data);
 	}
 	else
 		printf(YELLOW"Usage: ./philo [number_of_philosophers]"
 			"[time_to_die] [time_to_eat] [time_to_sleep]"
-			"[number_of_times_each_philosopher_must_eat]\n"YELLOW);
+			"[number_of_times_each_philosopher_must_eat]\n"RESET);
 	return (0);
 }

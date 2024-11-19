@@ -23,6 +23,7 @@
 
 # define RED "\033[1;31m"
 # define YELLOW "\033[0;33m"
+# define RESET "\033[0m"
 
 typedef struct s_data	t_data;
 
@@ -54,35 +55,47 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	pthread_t	thread; 
-	int			philo_id;
-	long		meals_eaten;
-	bool		is_full;
-	long		last_meal_time;
-	t_fork		*left_fork;
-	t_fork		*right_fork;
-	t_data		*data;
+	pthread_t		thread; 
+	int				philo_id;
+	long			meals_eaten;
+	bool			is_full;
+	bool			died;
+	long			last_meal_time;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
+	pthread_mutex_t	died_mtx;
+	t_data			*data;
 }	t_philo;
 
 struct s_data
 {
-	int		nbr_philos;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	long	meals_needed;
-	long	start_simulation;
-	bool	end_simulation;
-	t_fork	*forks;
-	t_philo	*philos;
+	int				nbr_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	long			meals_needed;
+	long			start_simulation;
+	bool			end_simulation;
+	bool			sync_philos;
+	pthread_mutex_t	sync_mtx;
+	pthread_mutex_t start_mtx;
+	pthread_mutex_t	end_sml_mtx;
+	t_fork			*forks;
+	t_philo			*philos;
 };
 
 long	_ft_atol(char *time);
 bool	data_init(t_data *data);
-void	mutex_handle(pthread_mutex_t *mutex, t_op op);
-void	thread_handle(pthread_t *thrd, void *(*start_routine)(void *),
+int		mutex_handle(pthread_mutex_t *mutex, t_op op);
+int		thread_handle(pthread_t *thrd, void *(*routine)(void *),
 			void *data, t_op op);
 int		ft_usleep(size_t milliseconds);
 long	get_curr_time(void);
+void	ft_print_status(t_philo *philo, e_status status);
+void	dinner_start(t_data *data);
+void	set_bool(pthread_mutex_t *mtx, bool *bol, bool value);
+bool	get_bool(pthread_mutex_t *mtx, bool *bol);
+void	set_long(pthread_mutex_t *mtx, long *bol, long value);
+bool	get_long(pthread_mutex_t *mtx, long *bol);
 
 #endif

@@ -12,50 +12,52 @@
 
 #include "philo.h"
 
-void	mutex_handle(pthread_mutex_t *mutex, t_op op)
+int	mutex_handle(pthread_mutex_t *mutex, t_op op)
 {
 	if (op == INIT)
 	{
 		if (pthread_mutex_init(mutex, NULL) != 0)
-			return ((void)printf("Mutex Error\n"));
+			return (printf("Mutex Error\n"), 1);
 	}
 	else if (op == LOCK)
 	{
 		if (pthread_mutex_lock(mutex) != 0)
-			return ((void)printf("Mutex Error\n"));
+			return (printf("Mutex Error\n"), 1);
 	}
 	else if (op == UNLOCK)
 	{
 		if (pthread_mutex_unlock(mutex) != 0)
-			return ((void)printf("Mutex Error\n"));
+			return (printf("Mutex Error\n"), 1);
 	}
 	else if (op == DESTROY)
 	{
 		if (pthread_mutex_destroy(mutex) != 0)
-			return ((void)printf("Mutex Error\n"));
+			return (printf("Mutex Error\n"), 1);
 	}
 	else
-		printf("Wrong code MUTEX\n");	
+		printf("Wrong code MUTEX\n");
+	return (0);
 }
 
-void	thread_handle(pthread_t *thrd, void *(*start_routine)(void *),
+int	thread_handle(pthread_t *thrd, void *(*start_routine)(void *),
 			void *data, t_op op)
 {
-	if (op == INIT)
+	if (op == CREATE)
 	{
 		if (pthread_create(thrd, NULL, start_routine, data) != 0)
-			return ((void)printf("Thread Error\n"));
+			return (printf("Thread Error\n"), 1);
 	}
 	else if (op == JOIN)
 	{
 		if (pthread_join(*thrd, NULL) != 0)
-			return ((void)printf("Thread Error\n"));
+			return (printf("Thread Error\n"), 1);
 	}
 	else if (op == DETACH)
 	{
 		if (pthread_detach(*thrd) != 0)
-			return ((void)printf("Thread Error\n"));
+			return (printf("Thread Error\n"), 1);
 	}
 	else
 		printf("Wrong code THREAD\n");
+	return (0);
 }
