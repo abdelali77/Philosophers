@@ -10,6 +10,7 @@ NC=\033[0m
 HEADER = philo.h
 
 SRCS = data_init.c philo.c utils.c handlers.c dinner.c \
+	   status.c set_get.c \
 
 OBJ_DIR = objs/
 

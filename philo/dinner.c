@@ -12,32 +12,42 @@
 
 #include "philo.h"
 
-void	routine_one(void *data)
-{
-	
-}
-
-void	one_philo(t_data *data)
-{
-	thread_handle(&data->philos[0].thread, routine_one, NULL, CREATE);
-	thread_handle(&data->philos[0].thread, routine_one, NULL, JOIN);
-}
-
-void	*dinner_simulation(void *data)
+void	*routine_one(void *data)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
+	ft_usleep(philo->data->time_to_die);
+	ft_print_status(philo, DEAD);
 	return (NULL);
 }
 
-void	wait_philosophers(t_data *data)
+void	one_philo(t_data *data)
 {
-	int	i;
+	if (thread_handle(&data->philos[0].thread, routine_one,
+		&data->philos[0], CREATE))
+		return ;
+	if (thread_handle(&data->philos[0].thread,
+		NULL, NULL, JOIN))
+		return ;
+}
 
-	i = -1;
-	while (++i < data->nbr_philos)
-		thread_handle(&data->philos[i].thread, dinner_simulation, NULL, JOIN);
+void	wait_threads(t_data *data)
+{
+	while (1)
+	{
+		if (!get_bool(&data->sync_mtx, &data->sync_philos))
+			break ;
+	}
+}
+
+void	*routine(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	wait_threads(data);
+	return (NULL);
 }
 
 void	dinner_start(t_data *data)
@@ -50,6 +60,18 @@ void	dinner_start(t_data *data)
 	else
 	{
 		while (++i < data->nbr_philos)
-			thread_handle(&data->philos[i].thread, dinner_simulation, &data->philos[i], CREATE);
+		{
+			if (thread_handle(&data->philos[i].thread, routine,
+				&data->philos[i], CREATE))
+				return ;
+		}
+	}
+	data->start_simulation = get_curr_time();
+	set_bool(&data->sync_mtx, &data->sync_philos, true);
+	i = -1;
+	while (++i < data->nbr_philos)
+	{
+		if (thread_handle(&data->philos[i].thread, NULL, NULL, JOIN))
+			return;
 	}
 }

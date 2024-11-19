@@ -24,6 +24,7 @@ bool	philo_init(t_data *data)
 		philo->data = data;
 		philo->philo_id = i + 1;
 		philo->meals_eaten = 0;
+		philo->died = false;
 		philo->is_full = false;
 		philo->last_meal_time = get_curr_time();
 		philo->left_fork = &data->forks[i];
@@ -43,6 +44,7 @@ bool	data_init(t_data *data)
 
 	i = -1;
 	data->end_simulation = false;
+	data->sync_philos = false;
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
 	if (!data->philos)
 		return (printf("Malloc ERROR\n"), false);
