@@ -23,10 +23,13 @@ bool	philo_init(t_data *data)
 		philo = data->philos + i;
 		philo->data = data;
 		philo->philo_id = i + 1;
-		philo->meals_eaten = 0;
+		philo->meals_counter = 0;
 		philo->died = false;
 		philo->is_full = false;
 		philo->last_meal_time = get_curr_time();
+		mutex_handle(&philo->last_meal_mtx, INIT);
+		mutex_handle(&philo->died_mtx, INIT);
+		mutex_handle(&philo->meals_mtx, INIT);
 		philo->left_fork = &data->forks[i];
 		philo->right_fork = &data->forks[(i + 1) % philo->data->nbr_philos];
 		if (philo->data->nbr_philos % 2 == 0)
@@ -45,6 +48,9 @@ bool	data_init(t_data *data)
 	i = -1;
 	data->end_simulation = false;
 	data->sync_philos = false;
+	mutex_handle(&data->sync_mtx, INIT);
+	mutex_handle(&data->start_mtx, INIT);
+	mutex_handle(&data->end_sml_mtx, INIT);
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
 	if (!data->philos)
 		return (printf("Malloc ERROR\n"), false);

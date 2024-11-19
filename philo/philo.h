@@ -57,13 +57,15 @@ typedef struct s_philo
 {
 	pthread_t		thread; 
 	int				philo_id;
-	long			meals_eaten;
+	long			meals_counter;
 	bool			is_full;
 	bool			died;
 	long			last_meal_time;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	pthread_mutex_t	died_mtx;
+	pthread_mutex_t	last_meal_mtx;
+	pthread_mutex_t	meals_mtx;
 	t_data			*data;
 }	t_philo;
 
@@ -97,5 +99,8 @@ void	set_bool(pthread_mutex_t *mtx, bool *bol, bool value);
 bool	get_bool(pthread_mutex_t *mtx, bool *bol);
 void	set_long(pthread_mutex_t *mtx, long *bol, long value);
 bool	get_long(pthread_mutex_t *mtx, long *bol);
+bool 	finish_simulation(t_data *data);
+void	ft_eat(t_philo *philo);
+void	ft_think(t_philo *philo);
 
 #endif

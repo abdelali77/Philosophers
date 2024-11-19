@@ -47,6 +47,15 @@ void	*routine(void *data)
 
 	philo = (t_philo *)data;
 	wait_threads(data);
+	while (!finish_simulation(data))
+	{
+		if (philo->is_full)
+			return (NULL);
+		ft_eat(philo);
+		ft_print_status(philo, SLEEP);
+		ft_usleep(philo->data->time_to_sleep);
+		ft_think(philo);
+	}
 	return (NULL);
 }
 

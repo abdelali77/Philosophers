@@ -45,3 +45,8 @@ bool get_long(pthread_mutex_t *mtx, long *bol)
     mutex_handle(mtx, UNLOCK);
     return (ret_val);
 }
+
+bool    finish_simulation(t_data *data)
+{
+    return (get_bool(&data->end_sml_mtx, &data->end_simulation));
+}
