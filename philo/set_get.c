@@ -12,41 +12,41 @@
 
 #include "philo.h"
 
-void    set_bool(pthread_mutex_t *mtx, bool *bol, bool value)
+void	set_bool(pthread_mutex_t *mtx, bool *bol, bool value)
 {
-    mutex_handle(mtx, LOCK);
-    *bol = value;
-    mutex_handle(mtx, UNLOCK);
+	mutex_handle(mtx, LOCK);
+	*bol = value;
+	mutex_handle(mtx, UNLOCK);
 }
 
 bool    get_bool(pthread_mutex_t *mtx, bool *bol)
 {
-    bool    ret_val;
+	bool	ret_val;
 
-    mutex_handle(mtx, LOCK);
-    ret_val = *bol;
-    mutex_handle(mtx, UNLOCK);
-    return (ret_val);
+	mutex_handle(mtx, LOCK);
+	ret_val = *bol;
+	mutex_handle(mtx, UNLOCK);
+	return (ret_val);
 }
 
-void set_long(pthread_mutex_t *mtx, long *bol, long value)
+void	set_long(pthread_mutex_t *mtx, long *bol, long value)
 {
-    mutex_handle(mtx, LOCK);
-    *bol = value;
-    mutex_handle(mtx, UNLOCK);
+	mutex_handle(mtx, LOCK);
+	*bol = value;
+	mutex_handle(mtx, UNLOCK);
 }
 
-bool get_long(pthread_mutex_t *mtx, long *bol)
+long	get_long(pthread_mutex_t *mtx, long *bol)
 {
-    bool ret_val;
+	long ret_val;
 
-    mutex_handle(mtx, LOCK);
-    ret_val = *bol;
-    mutex_handle(mtx, UNLOCK);
-    return (ret_val);
+	mutex_handle(mtx, LOCK);
+	ret_val = *bol;
+	mutex_handle(mtx, UNLOCK);
+	return (ret_val);
 }
 
-bool    finish_simulation(t_data *data)
+bool	finish_simulation(t_data *data)
 {
-    return (get_bool(&data->end_sml_mtx, &data->end_simulation));
+	return (get_bool(&data->end_sml_mtx, &data->end_simulation));
 }

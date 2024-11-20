@@ -39,12 +39,12 @@ int	mutex_handle(pthread_mutex_t *mutex, t_op op)
 	return (0);
 }
 
-int	thread_handle(pthread_t *thrd, void *(*start_routine)(void *),
+int	thread_handle(pthread_t *thrd, void *(*routine)(void *),
 			void *data, t_op op)
 {
 	if (op == CREATE)
 	{
-		if (pthread_create(thrd, NULL, start_routine, data) != 0)
+		if (pthread_create(thrd, NULL, routine, data) != 0)
 			return (printf("Thread Error\n"), 1);
 	}
 	else if (op == JOIN)

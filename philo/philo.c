@@ -12,31 +12,6 @@
 
 #include "philo.h"
 
-bool	convert_args(t_data *data, char **arg, int ac)
-{
-	data->meals_needed = -1;
-	if (_ft_atol(arg[1]) <= 0)
-		return (false);
-	data->nbr_philos = _ft_atol(arg[1]);
-	if (_ft_atol(arg[2]) <= 0)
-		return (false);
-	data->time_to_die = _ft_atol(arg[2]);
-	if (_ft_atol(arg[3]) <= 0)
-		return (false);
-	data->time_to_eat = _ft_atol(arg[3]);
-	if (_ft_atol(arg[4]) <= 0)
-		return (false);
-	data->time_to_sleep = _ft_atol(arg[4]);
-	data->meals_needed = -1;
-	if (ac == 6)
-	{
-		if (_ft_atol(arg[5]) < 0)
-			return (false);
-		data->meals_needed = _ft_atol(arg[5]);
-	}
-	return (true);
-}
-
 int	main(int ac, char **av)
 {
 	t_data	data;

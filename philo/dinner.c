@@ -15,10 +15,12 @@
 void	*routine_one(void *data)
 {
 	t_philo	*philo;
+	long	timestamp;
 
 	philo = (t_philo *)data;
 	ft_usleep(philo->data->time_to_die);
-	ft_print_status(philo, DEAD);
+	timestamp = get_curr_time() - philo->data->start_simulation;
+	printf(""BOLD"%ld"RESET" %d "RED"died"RESET"\n", timestamp, philo->philo_id);
 	return (NULL);
 }
 
@@ -65,22 +67,24 @@ void	dinner_start(t_data *data)
 
 	i = -1;
 	if (data->nbr_philos == 1)
+	{
+		data->start_simulation = get_curr_time();
 		one_philo(data);
+		return ;
+	}
 	else
 	{
 		while (++i < data->nbr_philos)
 		{
-			if (thread_handle(&data->philos[i].thread, routine,
-				&data->philos[i], CREATE))
-				return ;
+			thread_handle(&data->philos[i].thread, routine,
+				&data->philos[i], CREATE);
 		}
 	}
-	data->start_simulation = get_curr_time();
 	set_bool(&data->sync_mtx, &data->sync_philos, true);
+	set_long(&data->start_mtx, &data->start_simulation, get_curr_time());
 	i = -1;
 	while (++i < data->nbr_philos)
 	{
-		if (thread_handle(&data->philos[i].thread, NULL, NULL, JOIN))
-			return;
+		thread_handle(&data->philos[i].thread, NULL, NULL, JOIN);
 	}
 }

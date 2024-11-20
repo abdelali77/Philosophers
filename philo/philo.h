@@ -24,6 +24,7 @@
 # define RED "\033[1;31m"
 # define YELLOW "\033[0;33m"
 # define RESET "\033[0m"
+# define BOLD "\033[1m"
 
 typedef struct s_data	t_data;
 
@@ -65,7 +66,7 @@ typedef struct s_philo
 	t_fork			*right_fork;
 	pthread_mutex_t	died_mtx;
 	pthread_mutex_t	last_meal_mtx;
-	pthread_mutex_t	meals_mtx;
+	pthread_mutex_t	full_mtx;
 	t_data			*data;
 }	t_philo;
 
@@ -87,6 +88,7 @@ struct s_data
 	t_philo			*philos;
 };
 
+bool	convert_args(t_data *data, char **arg, int ac);
 long	_ft_atol(char *time);
 bool	data_init(t_data *data);
 int		mutex_handle(pthread_mutex_t *mutex, t_op op);
@@ -99,7 +101,7 @@ void	dinner_start(t_data *data);
 void	set_bool(pthread_mutex_t *mtx, bool *bol, bool value);
 bool	get_bool(pthread_mutex_t *mtx, bool *bol);
 void	set_long(pthread_mutex_t *mtx, long *bol, long value);
-bool	get_long(pthread_mutex_t *mtx, long *bol);
+long	get_long(pthread_mutex_t *mtx, long *bol);
 bool 	finish_simulation(t_data *data);
 void	ft_eat(t_philo *philo);
 void	ft_think(t_philo *philo);

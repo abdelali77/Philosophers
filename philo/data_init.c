@@ -12,6 +12,31 @@
 
 #include "philo.h"
 
+bool	convert_args(t_data *data, char **arg, int ac)
+{
+	data->meals_needed = -1;
+	if (_ft_atol(arg[1]) <= 0)
+		return (false);
+	data->nbr_philos = _ft_atol(arg[1]);
+	if (_ft_atol(arg[2]) <= 0)
+		return (false);
+	data->time_to_die = _ft_atol(arg[2]);
+	if (_ft_atol(arg[3]) <= 0)
+		return (false);
+	data->time_to_eat = _ft_atol(arg[3]);
+	if (_ft_atol(arg[4]) <= 0)
+		return (false);
+	data->time_to_sleep = _ft_atol(arg[4]);
+	data->meals_needed = -1;
+	if (ac == 6)
+	{
+		if (_ft_atol(arg[5]) < 0)
+			return (false);
+		data->meals_needed = _ft_atol(arg[5]);
+	}
+	return (true);
+}
+
 bool	philo_init(t_data *data)
 {
 	int		i;
@@ -29,7 +54,7 @@ bool	philo_init(t_data *data)
 		philo->last_meal_time = get_curr_time();
 		mutex_handle(&philo->last_meal_mtx, INIT);
 		mutex_handle(&philo->died_mtx, INIT);
-		mutex_handle(&philo->meals_mtx, INIT);
+		mutex_handle(&philo->full_mtx, INIT);
 		philo->left_fork = &data->forks[i];
 		philo->right_fork = &data->forks[(i + 1) % philo->data->nbr_philos];
 		if (philo->data->nbr_philos % 2 == 0)
@@ -48,6 +73,7 @@ bool	data_init(t_data *data)
 	i = -1;
 	data->end_simulation = false;
 	data->sync_philos = false;
+	data->start_simulation = 0;
 	mutex_handle(&data->sync_mtx, INIT);
 	mutex_handle(&data->start_mtx, INIT);
 	mutex_handle(&data->end_sml_mtx, INIT);
