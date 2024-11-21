@@ -12,48 +12,54 @@
 
 #include "philo.h"
 
-bool	is_died(t_philo *philo)
+bool	is_died(t_data *data)
 {
 	long	elap;
+	int		i;
 
-	if (get_bool(&philo->full_mtx, &philo->is_full))
-		return (false);
-	elap = get_curr_time() - get_long(&philo->last_meal_mtx, &philo->last_meal_time);
-	if (elap > philo->data->time_to_die)
-		return (true);
+	i = -1;
+	while (++i < data->nbr_philos)
+	{
+		if (get_bool(&data->philos[i].full_mtx, &data->philos->is_full))
+			return (false);
+		elap = get_curr_time() - get_long(&data->philos[i].last_meal_mtx, &data->philos[i].last_meal_time);
+		if (elap > data->time_to_die)
+		{
+			ft_print_status(&data->philos[i], DEAD);
+			return (true);
+		}
+	}
 	return (false);
 }
 
-int	all_philos_full_died(t_data *data)
+bool	all_philos_ate(t_data *data)
 {
 	int	i;
 
 	i = -1;
 	while (++i < data->nbr_philos)
 	{
-		if (data->philos[i].meals_counter == data->meals_needed)
-			data->philos[i].is_full = true;
-		if (!data->philos[i].is_full)
-			return (0);
+		if (data->meals_needed <= data->philos[i].meals_counter)
+			set_bool(&data->philos[i].full_mtx, &data->philos[i].is_full, true);
 	}
 	i = -1;
 	while (++i < data->nbr_philos)
 	{
-		if (data->time_to_die >= data->philos[i].last_meal_time)
-			data->philos[i].died = true;
-		if (data->philos[i].died)
-			return (0);
+		if (!get_bool(&data->philos[i].full_mtx, &data->philos[i].is_full))
+			return (false);
 	}
-	return (1);
+	return (true);
 }
 
 void	*ft_monitor(void *data)
 {
-	t_philo	*philo;
+	t_data	*dt;
 
-	philo = (t_philo *)data;
+	dt = (t_data *)data;
 	while (1)
 	{
-		
+		if (is_died(dt) || all_philos_ate(dt))
+			break ;
 	}
+	return (data);
 }
