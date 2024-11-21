@@ -34,27 +34,23 @@ void	one_philo(t_data *data)
 		return ;
 }
 
-void	wait_threads(t_data *data)
-{
-	while (1)
-	{
-		if (!get_bool(&data->sync_mtx, &data->sync_philos))
-			break ;
-	}
-}
-
 void	*routine(void *data)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	wait_threads(data);
+	while (!get_bool(&philo->data->sync_mtx, &philo->data->sync_philos));
 	while (!finish_simulation(data))
 	{
 		if (philo->is_full)
 			return (NULL);
+		if (philo->philo_id % 2 == 0)
+		{
+			ft_print_status(philo, SLEEP);
+			ft_usleep(philo->data->time_to_sleep);
+		}
 		ft_eat(philo);
-		ft_print_status(philo, SLEEP);
+		ft_print_status(philo, SLEEP);    
 		ft_usleep(philo->data->time_to_sleep);
 		ft_think(philo);
 	}
@@ -80,11 +76,9 @@ void	dinner_start(t_data *data)
 				&data->philos[i], CREATE);
 		}
 	}
-	set_bool(&data->sync_mtx, &data->sync_philos, true);
 	set_long(&data->start_mtx, &data->start_simulation, get_curr_time());
+	set_bool(&data->sync_mtx, &data->sync_philos, true);
 	i = -1;
 	while (++i < data->nbr_philos)
-	{
 		thread_handle(&data->philos[i].thread, NULL, NULL, JOIN);
-	}
 }

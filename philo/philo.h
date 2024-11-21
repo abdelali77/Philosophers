@@ -56,7 +56,7 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	pthread_t		thread; 
+	pthread_t		thread;
 	int				philo_id;
 	long			meals_counter;
 	bool			is_full;

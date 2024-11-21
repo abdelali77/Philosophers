@@ -17,22 +17,22 @@ int	mutex_handle(pthread_mutex_t *mutex, t_op op)
 	if (op == INIT)
 	{
 		if (pthread_mutex_init(mutex, NULL) != 0)
-			return (printf("Mutex Error\n"), 1);
+			return (printf("Mutex Error INIT\n"), 1);
 	}
 	else if (op == LOCK)
 	{
 		if (pthread_mutex_lock(mutex) != 0)
-			return (printf("Mutex Error\n"), 1);
+			return (printf("Mutex Error LOCK\n"), 1);
 	}
 	else if (op == UNLOCK)
 	{
 		if (pthread_mutex_unlock(mutex) != 0)
-			return (printf("Mutex Error\n"), 1);
+			return (printf("Mutex Error UNLOCK\n"), 1);
 	}
 	else if (op == DESTROY)
 	{
 		if (pthread_mutex_destroy(mutex) != 0)
-			return (printf("Mutex Error\n"), 1);
+			return (printf("Mutex Error DESTROY\n"), 1);
 	}
 	else
 		printf("Wrong code MUTEX\n");
