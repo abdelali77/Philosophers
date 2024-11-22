@@ -12,22 +12,17 @@
 
 #include "philo.h"
 
-bool	is_died(t_data *data)
+bool	is_died(t_philo *philo)
 {
 	long	elap;
-	int		i;
 
-	i = -1;
-	while (++i < data->nbr_philos)
+	if (get_bool(&philo->full_mtx, &philo->is_full))
+		return (false);
+	elap = get_curr_time() - get_long(&philo->last_meal_mtx, &philo->last_meal_time);
+	if (elap >= philo->data->time_to_die)
 	{
-		if (get_bool(&data->philos[i].full_mtx, &data->philos->is_full))
-			return (false);
-		elap = get_curr_time() - get_long(&data->philos[i].last_meal_mtx, &data->philos[i].last_meal_time);
-		if (elap > data->time_to_die)
-		{
-			ft_print_status(&data->philos[i], DEAD);
-			return (true);
-		}
+		ft_print_status(philo, DEAD);
+		return (true);
 	}
 	return (false);
 }
@@ -51,15 +46,19 @@ bool	all_philos_ate(t_data *data)
 	return (true);
 }
 
-void	*ft_monitor(void *data)
+void	ft_monitor(void *data)
 {
 	t_data	*dt;
+	int		i;
 
 	dt = (t_data *)data;
 	while (1)
 	{
-		if (is_died(dt) || all_philos_ate(dt))
-			break ;
+		i = -1;
+		while (++i < dt->nbr_philos)
+		{
+			if (is_died(&dt->philos[i]) || all_philos_ate(dt))
+				return ;
+		}
 	}
-	return (data);
 }

@@ -72,7 +72,7 @@ typedef struct s_philo
 
 struct s_data
 {
-	int				nbr_philos;
+	long			nbr_philos;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
@@ -80,7 +80,6 @@ struct s_data
 	long			start_simulation;
 	bool			end_simulation;
 	bool			sync_philos;
-	pthread_t		monitor;
 	pthread_mutex_t	sync_mtx;
 	pthread_mutex_t start_mtx;
 	pthread_mutex_t	end_sml_mtx;
@@ -106,6 +105,6 @@ long	get_long(pthread_mutex_t *mtx, long *bol);
 bool 	finish_simulation(t_data *data);
 void	ft_eat(t_philo *philo);
 void	ft_think(t_philo *philo);
-void	*ft_monitor(void *data);
+void	ft_monitor(void *data);
 
 #endif

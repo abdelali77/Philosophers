@@ -76,9 +76,9 @@ void	dinner_start(t_data *data)
 				&data->philos[i], CREATE);
 		}
 	}
-	thread_handle(&data->monitor, ft_monitor, data->philos, CREATE);
 	set_long(&data->start_mtx, &data->start_simulation, get_curr_time());
 	set_bool(&data->sync_mtx, &data->sync_philos, true);
+	ft_monitor(data);
 	i = -1;
 	while (++i < data->nbr_philos)
 		thread_handle(&data->philos[i].thread, NULL, NULL, JOIN);
