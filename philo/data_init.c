@@ -27,7 +27,6 @@ bool	convert_args(t_data *data, char **arg, int ac)
 	if (_ft_atol(arg[4]) <= 0)
 		return (false);
 	data->time_to_sleep = _ft_atol(arg[4]);
-	data->meals_needed = -1;
 	if (ac == 6)
 	{
 		if (_ft_atol(arg[5]) < 0)
@@ -78,6 +77,7 @@ bool	data_init(t_data *data)
 	mutex_handle(&data->start_mtx, INIT);
 	mutex_handle(&data->end_sml_mtx, INIT);
 	mutex_handle(&data->print_mtx, INIT);
+	mutex_handle(&data->lock, INIT);
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
 	if (!data->philos)
 		return (printf("Malloc ERROR\n"), false);

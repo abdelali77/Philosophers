@@ -80,6 +80,7 @@ struct s_data
 	long			start_simulation;
 	bool			end_simulation;
 	bool			sync_philos;
+	pthread_mutex_t	lock;
 	pthread_mutex_t	sync_mtx;
 	pthread_mutex_t start_mtx;
 	pthread_mutex_t	end_sml_mtx;
@@ -94,7 +95,7 @@ bool	data_init(t_data *data);
 int		mutex_handle(pthread_mutex_t *mutex, t_op op);
 int		thread_handle(pthread_t *thrd, void *(*routine)(void *),
 			void *data, t_op op);
-int		ft_usleep(size_t milliseconds);
+int		ft_usleep(size_t milliseconds, t_data *data);
 long	get_curr_time(void);
 void	ft_print_status(t_philo *philo, e_status status);
 void	dinner_start(t_data *data);

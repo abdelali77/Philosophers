@@ -41,12 +41,14 @@ long	get_curr_time(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-int	ft_usleep(size_t milliseconds)
+int	ft_usleep(size_t milliseconds, t_data *data)
 {
 	size_t	start;
 
+	pthread_mutex_lock(&data->lock);
 	start = get_curr_time();
 	while ((get_curr_time() - start) < milliseconds)
 		usleep(500);
+	pthread_mutex_unlock(&data->lock);
 	return (0);
 }

@@ -18,7 +18,7 @@ void	*routine_one(void *data)
 	long	timestamp;
 
 	philo = (t_philo *)data;
-	ft_usleep(philo->data->time_to_die);
+	ft_usleep(philo->data->time_to_die, philo->data);
 	timestamp = get_curr_time() - philo->data->start_simulation;
 	printf(""BOLD"%ld"RESET" %d "RED"died"RESET"\n", timestamp, philo->philo_id);
 	return (NULL);
@@ -39,22 +39,23 @@ void	*routine(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	while (!get_bool(&philo->data->sync_mtx, &philo->data->sync_philos));
-	while (!finish_simulation(data))
+	while (!get_bool(&philo->data->sync_mtx, &philo->data->sync_philos))
+		;
+	while (!finish_simulation(philo->data))
 	{
 		if (philo->is_full)
 			return (NULL);
-		if (philo->philo_id % 2 != 0)
+		if (philo->philo_id % 2 == 0)
 		{
 			ft_print_status(philo, SLEEP);
-			ft_usleep(philo->data->time_to_sleep);
+			ft_usleep(philo->data->time_to_sleep, philo->data);
 		}
 		ft_eat(philo);
 		ft_print_status(philo, SLEEP);
-		ft_usleep(philo->data->time_to_sleep);
+		ft_usleep(philo->data->time_to_sleep, philo->data);
 		ft_print_status(philo, THINK);
 	}
-	return (NULL);
+	return (philo);
 }
 
 void	dinner_start(t_data *data)
