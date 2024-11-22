@@ -104,7 +104,6 @@ void	set_long(pthread_mutex_t *mtx, long *bol, long value);
 long	get_long(pthread_mutex_t *mtx, long *bol);
 bool 	finish_simulation(t_data *data);
 void	ft_eat(t_philo *philo);
-void	ft_think(t_philo *philo);
 void	ft_monitor(void *data);
 
 #endif

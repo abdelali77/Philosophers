@@ -44,15 +44,15 @@ void	*routine(void *data)
 	{
 		if (philo->is_full)
 			return (NULL);
-		if (philo->philo_id % 2 == 0)
+		if (philo->philo_id % 2 != 0)
 		{
 			ft_print_status(philo, SLEEP);
 			ft_usleep(philo->data->time_to_sleep);
 		}
 		ft_eat(philo);
-		ft_print_status(philo, SLEEP);    
+		ft_print_status(philo, SLEEP);
 		ft_usleep(philo->data->time_to_sleep);
-		ft_think(philo);
+		ft_print_status(philo, THINK);
 	}
 	return (NULL);
 }
