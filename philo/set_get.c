@@ -14,35 +14,35 @@
 
 void	set_bool(pthread_mutex_t *mtx, bool *bol, bool value)
 {
-	mutex_handle(mtx, LOCK);
+	pthread_mutex_lock(mtx);
 	*bol = value;
-	mutex_handle(mtx, UNLOCK);
+	pthread_mutex_unlock(mtx);
 }
 
 bool    get_bool(pthread_mutex_t *mtx, bool *bol)
 {
 	bool	ret_val;
 
-	mutex_handle(mtx, LOCK);
+	pthread_mutex_lock(mtx);
 	ret_val = *bol;
-	mutex_handle(mtx, UNLOCK);
+	pthread_mutex_unlock(mtx);
 	return (ret_val);
 }
 
 void	set_long(pthread_mutex_t *mtx, long *bol, long value)
 {
-	mutex_handle(mtx, LOCK);
+	pthread_mutex_lock(mtx);
 	*bol = value;
-	mutex_handle(mtx, UNLOCK);
+	pthread_mutex_unlock(mtx);
 }
 
 long	get_long(pthread_mutex_t *mtx, long *bol)
 {
 	long ret_val;
 
-	mutex_handle(mtx, LOCK);
+	pthread_mutex_lock(mtx);
 	ret_val = *bol;
-	mutex_handle(mtx, UNLOCK);
+	pthread_mutex_unlock(mtx);
 	return (ret_val);
 }
 

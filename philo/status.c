@@ -16,9 +16,9 @@ void	ft_eat(t_philo *philo)
 {
 	if (philo->is_full || finish_simulation(philo->data))
 		return ;
-	mutex_handle(&philo->right_fork->fork, LOCK);
+	pthread_mutex_lock(&philo->right_fork->fork);
 	ft_print_status(philo, TAKE);
-	mutex_handle(&philo->left_fork->fork, LOCK);
+	pthread_mutex_lock(&philo->left_fork->fork);
 	ft_print_status(philo, TAKE);
 	philo->meals_counter++;
 	ft_print_status(philo, EAT);
@@ -26,17 +26,32 @@ void	ft_eat(t_philo *philo)
 	set_long(&philo->last_meal_mtx, &philo->last_meal_time, get_curr_time());
 	if (philo->data->meals_needed > -1 && philo->meals_counter >= philo->data->meals_needed)
 		set_bool(&philo->full_mtx, &philo->is_full, true);
-	mutex_handle(&philo->right_fork->fork, UNLOCK);
-	mutex_handle(&philo->left_fork->fork, UNLOCK);
+	pthread_mutex_unlock(&philo->right_fork->fork);
+	pthread_mutex_unlock(&philo->left_fork->fork);
+}
+
+void	ft_thinking(t_philo *philo)
+{
+	if (!finish_simulation(philo->data))
+		ft_print_status(philo, THINK);
+}
+
+void	ft_sleeping(t_philo *philo)
+{
+	if (!finish_simulation(philo->data))
+	{
+		ft_print_status(philo, SLEEP);
+		ft_usleep(philo->data->time_to_sleep, philo->data);
+	}
 }
 
 void	ft_print_status(t_philo *philo, e_status status)
 {
 	long	timestamp;
 
-	if (philo->is_full || philo->data->end_simulation)
+	if (philo->is_full || finish_simulation(philo->data))
 		return ;
-	mutex_handle(&philo->data->print_mtx, LOCK);
+	pthread_mutex_lock(&philo->data->print_mtx);
 	timestamp = get_curr_time() - get_long(&philo->data->start_mtx, &philo->data->start_simulation);
 	if (status == EAT)
 		printf("%ld %d is eating\n", timestamp, philo->philo_id);
@@ -48,5 +63,5 @@ void	ft_print_status(t_philo *philo, e_status status)
 		printf("%ld %d has taken a fork\n", timestamp, philo->philo_id);
 	else if (status == DEAD)
 		printf("%ld %d "RED"died"RESET"\n", timestamp, philo->philo_id);
-	mutex_handle(&philo->data->print_mtx, UNLOCK);
+	pthread_mutex_unlock(&philo->data->print_mtx);
 }

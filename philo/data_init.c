@@ -51,9 +51,9 @@ bool	philo_init(t_data *data)
 		philo->died = false;
 		philo->is_full = false;
 		philo->last_meal_time = get_curr_time();
-		mutex_handle(&philo->last_meal_mtx, INIT);
-		mutex_handle(&philo->died_mtx, INIT);
-		mutex_handle(&philo->full_mtx, INIT);
+		pthread_mutex_init(&philo->last_meal_mtx, NULL);
+		pthread_mutex_init(&philo->died_mtx, NULL);
+		pthread_mutex_init(&philo->full_mtx, NULL);
 		philo->left_fork = &data->forks[i];
 		philo->right_fork = &data->forks[(i + 1) % philo->data->nbr_philos];
 		if (philo->data->nbr_philos % 2 == 0)
@@ -73,11 +73,11 @@ bool	data_init(t_data *data)
 	data->end_simulation = false;
 	data->sync_philos = false;
 	data->start_simulation = 0;
-	mutex_handle(&data->sync_mtx, INIT);
-	mutex_handle(&data->start_mtx, INIT);
-	mutex_handle(&data->end_sml_mtx, INIT);
-	mutex_handle(&data->print_mtx, INIT);
-	mutex_handle(&data->lock, INIT);
+	pthread_mutex_init(&data->sync_mtx, NULL);
+	pthread_mutex_init(&data->start_mtx, NULL);
+	pthread_mutex_init(&data->end_sml_mtx, NULL);
+	pthread_mutex_init(&data->print_mtx, NULL);
+	pthread_mutex_init(&data->lock, NULL);
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
 	if (!data->philos)
 		return (printf("Malloc ERROR\n"), false);
@@ -87,7 +87,7 @@ bool	data_init(t_data *data)
 	while (++i < data->nbr_philos)
 	{
 		data->forks[i].fork_id = i;
-		mutex_handle(&data->forks[i].fork, INIT);
+		pthread_mutex_init(&data->forks[i].fork, NULL);
 	}
 	philo_init(data);
 	return (true);

@@ -92,9 +92,6 @@ struct s_data
 bool	convert_args(t_data *data, char **arg, int ac);
 long	_ft_atol(char *time);
 bool	data_init(t_data *data);
-int		mutex_handle(pthread_mutex_t *mutex, t_op op);
-int		thread_handle(pthread_t *thrd, void *(*routine)(void *),
-			void *data, t_op op);
 int		ft_usleep(size_t milliseconds, t_data *data);
 long	get_curr_time(void);
 void	ft_print_status(t_philo *philo, e_status status);
@@ -106,5 +103,7 @@ long	get_long(pthread_mutex_t *mtx, long *bol);
 bool 	finish_simulation(t_data *data);
 void	ft_eat(t_philo *philo);
 void	ft_monitor(void *data);
+void	ft_sleeping(t_philo *philo);
+void	ft_thinking(t_philo *philo);
 
 #endif

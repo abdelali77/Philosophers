@@ -26,12 +26,8 @@ void	*routine_one(void *data)
 
 void	one_philo(t_data *data)
 {
-	if (thread_handle(&data->philos[0].thread, routine_one,
-		&data->philos[0], CREATE))
-		return ;
-	if (thread_handle(&data->philos[0].thread,
-		NULL, NULL, JOIN))
-		return ;
+	pthread_create(&data->philos[0].thread, NULL, routine_one, &data->philos[0]);
+	pthread_join(data->philos[0].thread, NULL);
 }
 
 void	*routine(void *data)
@@ -39,21 +35,26 @@ void	*routine(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
+	if (philo->is_full || finish_simulation(philo->data))
+		return (philo);
 	while (!get_bool(&philo->data->sync_mtx, &philo->data->sync_philos))
 		;
-	while (!finish_simulation(philo->data))
+	if (philo->philo_id % 2 == 0)
 	{
-		if (philo->is_full)
-			return (NULL);
-		if (philo->philo_id % 2 == 0)
-		{
-			ft_print_status(philo, SLEEP);
-			ft_usleep(philo->data->time_to_sleep, philo->data);
-		}
-		ft_eat(philo);
 		ft_print_status(philo, SLEEP);
 		ft_usleep(philo->data->time_to_sleep, philo->data);
-		ft_print_status(philo, THINK);
+	}
+	while (!finish_simulation(philo->data))
+	{
+		if (philo->is_full || finish_simulation(philo->data))
+			return (philo);
+		ft_thinking(philo);
+		ft_eat(philo);
+		if (finish_simulation(philo->data))
+			return (philo);
+		ft_sleeping(philo);
+		if (finish_simulation(philo->data))
+			return (philo);
 	}
 	return (philo);
 }
@@ -71,16 +72,14 @@ void	dinner_start(t_data *data)
 	}
 	else
 	{
-		while (++i < data->nbr_philos)
-		{
-			thread_handle(&data->philos[i].thread, routine,
-				&data->philos[i], CREATE);
+		while (++i < data->nbr_philos) {
+			pthread_create(&data->philos[i].thread, NULL, routine, &data->philos[i]);
 		}
+		data->start_simulation = get_curr_time();
+		set_bool(&data->sync_mtx, &data->sync_philos, true);
 	}
-	set_long(&data->start_mtx, &data->start_simulation, get_curr_time());
-	set_bool(&data->sync_mtx, &data->sync_philos, true);
 	ft_monitor(data);
 	i = -1;
 	while (++i < data->nbr_philos)
-		thread_handle(&data->philos[i].thread, NULL, NULL, JOIN);
+		pthread_join(data->philos[i].thread, NULL);
 }
