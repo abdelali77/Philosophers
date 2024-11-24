@@ -18,8 +18,10 @@ bool	is_died(t_philo *philo)
 
 	if (get_bool(&philo->full_mtx, &philo->is_full))
 		return (false);
-	elap = get_curr_time() - get_long(&philo->last_meal_mtx, &philo->last_meal_time);
-	if (elap >= philo->data->time_to_die && !get_bool(&philo->full_mtx, &philo->is_full))
+	elap = get_curr_time() - get_long(&philo->last_eat_mtx,
+			&philo->last_eat_time);
+	if (elap >= philo->data->time_to_die
+		&& !get_bool(&philo->full_mtx, &philo->is_full))
 	{
 		ft_print_status(philo, DEAD);
 		return (true);

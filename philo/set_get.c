@@ -19,7 +19,7 @@ void	set_bool(pthread_mutex_t *mtx, bool *bol, bool value)
 	pthread_mutex_unlock(mtx);
 }
 
-bool    get_bool(pthread_mutex_t *mtx, bool *bol)
+bool	get_bool(pthread_mutex_t *mtx, bool *bol)
 {
 	bool	ret_val;
 
@@ -38,7 +38,7 @@ void	set_long(pthread_mutex_t *mtx, long *bol, long value)
 
 long	get_long(pthread_mutex_t *mtx, long *bol)
 {
-	long ret_val;
+	long	ret_val;
 
 	pthread_mutex_lock(mtx);
 	ret_val = *bol;

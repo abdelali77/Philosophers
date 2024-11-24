@@ -46,7 +46,7 @@ typedef enum e_status
 	EAT,
 	DEAD,
 	TAKE,
-}			e_status;
+}			t_status;
 
 typedef struct s_fork
 {
@@ -60,12 +60,10 @@ typedef struct s_philo
 	int				philo_id;
 	long			meals_counter;
 	bool			is_full;
-	bool			died;
-	long			last_meal_time;
+	long			last_eat_time;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	pthread_mutex_t	died_mtx;
-	pthread_mutex_t	last_meal_mtx;
+	pthread_mutex_t	last_eat_mtx;
 	pthread_mutex_t	full_mtx;
 	t_data			*data;
 }	t_philo;
@@ -80,9 +78,8 @@ struct s_data
 	long			start_simulation;
 	bool			end_simulation;
 	bool			sync_philos;
-	pthread_mutex_t	lock;
 	pthread_mutex_t	sync_mtx;
-	pthread_mutex_t start_mtx;
+	pthread_mutex_t	start_mtx;
 	pthread_mutex_t	end_sml_mtx;
 	pthread_mutex_t	print_mtx;
 	t_fork			*forks;
@@ -94,16 +91,17 @@ long	_ft_atol(char *time);
 bool	data_init(t_data *data);
 int		ft_usleep(size_t milliseconds, t_data *data);
 long	get_curr_time(void);
-void	ft_print_status(t_philo *philo, e_status status);
+void	ft_print_status(t_philo *philo, t_status status);
 void	dinner_start(t_data *data);
 void	set_bool(pthread_mutex_t *mtx, bool *bol, bool value);
 bool	get_bool(pthread_mutex_t *mtx, bool *bol);
 void	set_long(pthread_mutex_t *mtx, long *bol, long value);
 long	get_long(pthread_mutex_t *mtx, long *bol);
-bool 	finish_simulation(t_data *data);
+bool	finish_simulation(t_data *data);
 void	ft_eat(t_philo *philo);
 void	ft_monitor(void *data);
 void	ft_sleeping(t_philo *philo);
 void	ft_thinking(t_philo *philo);
+void	ft_clean(t_data *data);
 
 #endif

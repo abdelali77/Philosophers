@@ -21,10 +21,14 @@ int	main(int ac, char **av)
 		if (!convert_args(&data, av, ac))
 			return (printf("Enter a valid argument\n"), 1);
 		if (!data_init(&data))
-			return (1);
+			return (ft_clean(&data), 1);
 		if ((&data)->meals_needed == 0)
+		{
+			ft_clean(&data);
 			return (printf(RED"at least one meal needed\n"RESET), 1);
+		}
 		dinner_start(&data);
+		ft_clean(&data);
 	}
 	else
 		printf(YELLOW"Usage: ./philo [number_of_philosophers]"

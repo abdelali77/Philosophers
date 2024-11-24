@@ -36,7 +36,7 @@ bool	convert_args(t_data *data, char **arg, int ac)
 	return (true);
 }
 
-bool	philo_init(t_data *data)
+void	philo_init(t_data *data)
 {
 	int		i;
 	t_philo	*philo;
@@ -48,21 +48,16 @@ bool	philo_init(t_data *data)
 		philo->data = data;
 		philo->philo_id = i + 1;
 		philo->meals_counter = 0;
-		philo->died = false;
 		philo->is_full = false;
-		philo->last_meal_time = get_curr_time();
-		pthread_mutex_init(&philo->last_meal_mtx, NULL);
-		pthread_mutex_init(&philo->died_mtx, NULL);
+		philo->last_eat_time = get_curr_time();
+		pthread_mutex_init(&philo->last_eat_mtx, NULL);
 		pthread_mutex_init(&philo->full_mtx, NULL);
 		philo->left_fork = &data->forks[i];
-		philo->right_fork = &data->forks[(i + 1) % philo->data->nbr_philos];
-		if (philo->data->nbr_philos % 2 == 0)
-		{
-			philo->right_fork = &data->forks[i];
-			philo->left_fork = &data->forks[(i + 1) % philo->data->nbr_philos];
-		}
+		if (i == data->nbr_philos - 1)
+			philo->right_fork = &data->forks[0];
+		else
+			philo->right_fork = &data->forks[i + 1];
 	}
-	return (true);
 }
 
 bool	data_init(t_data *data)
@@ -77,7 +72,6 @@ bool	data_init(t_data *data)
 	pthread_mutex_init(&data->start_mtx, NULL);
 	pthread_mutex_init(&data->end_sml_mtx, NULL);
 	pthread_mutex_init(&data->print_mtx, NULL);
-	pthread_mutex_init(&data->lock, NULL);
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
 	if (!data->philos)
 		return (printf("Malloc ERROR\n"), false);
