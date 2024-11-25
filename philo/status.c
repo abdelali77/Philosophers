@@ -14,20 +14,22 @@
 
 void	ft_eat(t_philo *philo)
 {
-	if (get_bool(&philo->full_mtx, &philo->is_full)
-		|| finish_simulation(philo->data))
+	if (finish_simulation(philo->data) || get_bool(&philo->full_mtx, &philo->is_full))
 		return ;
 	pthread_mutex_lock(&philo->right_fork->fork);
 	ft_print_status(philo, TAKE);
 	pthread_mutex_lock(&philo->left_fork->fork);
 	ft_print_status(philo, TAKE);
-	philo->meals_counter++;
-	ft_print_status(philo, EAT);
-	ft_usleep(philo->data->time_to_eat, philo->data);
-	set_long(&philo->last_eat_mtx, &philo->last_eat_time, get_curr_time());
-	if (philo->data->meals_needed > -1
-		&& philo->meals_counter >= philo->data->meals_needed)
-		set_bool(&philo->full_mtx, &philo->is_full, true);
+	if (!finish_simulation(philo->data) && !get_bool(&philo->full_mtx, &philo->is_full))
+	{
+		philo->meals_counter++;
+		ft_print_status(philo, EAT);
+		ft_usleep(philo->data->time_to_eat, philo->data);
+		set_long(&philo->last_eat_mtx, &philo->last_eat_time, get_curr_time());
+		if (philo->data->meals_needed > 0
+			&& philo->meals_counter == philo->data->meals_needed)
+			set_bool(&philo->full_mtx, &philo->is_full, true);
+	}
 	pthread_mutex_unlock(&philo->right_fork->fork);
 	pthread_mutex_unlock(&philo->left_fork->fork);
 }
@@ -51,21 +53,25 @@ void	ft_print_status(t_philo *philo, t_status status)
 {
 	long	timestamp;
 
-	if (get_bool(&philo->full_mtx, &philo->is_full)
-		|| finish_simulation(philo->data))
-		return ;
 	pthread_mutex_lock(&philo->data->print_mtx);
 	timestamp = get_curr_time() - get_long(&philo->data->start_mtx,
 			&philo->data->start_simulation);
+	if (finish_simulation(philo->data) && status != DEAD)
+	{
+		pthread_mutex_unlock(&philo->data->print_mtx);
+		return ;
+	}
 	if (status == EAT)
-		printf("%ld %d is eating\n", timestamp, philo->philo_id);
+		printf("%ld "BOLD"%d"RESET" is eating\n", timestamp, philo->philo_id);
 	else if (status == SLEEP)
-		printf("%ld %d is sleeping\n", timestamp, philo->philo_id);
+		printf("%ld "BOLD"%d"RESET" is sleeping\n", timestamp, philo->philo_id);
 	else if (status == THINK)
-		printf("%ld %d is thinking\n", timestamp, philo->philo_id);
+		printf("%ld "BOLD"%d"RESET" is thinking\n", timestamp, philo->philo_id);
 	else if (status == TAKE)
-		printf("%ld %d has taken a fork\n", timestamp, philo->philo_id);
+		printf("%ld "BOLD"%d"RESET" has taken a fork\n",
+			timestamp, philo->philo_id);
 	else if (status == DEAD)
-		printf("%ld %d "RED"died"RESET"\n", timestamp, philo->philo_id);
+		printf("%ld "BOLD"%d"RESET" "RED"died"RESET"\n",
+			timestamp, philo->philo_id);
 	pthread_mutex_unlock(&philo->data->print_mtx);
 }

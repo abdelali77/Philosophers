@@ -20,12 +20,8 @@ bool	is_died(t_philo *philo)
 		return (false);
 	elap = get_curr_time() - get_long(&philo->last_eat_mtx,
 			&philo->last_eat_time);
-	if (elap >= philo->data->time_to_die
-		&& !get_bool(&philo->full_mtx, &philo->is_full))
-	{
-		ft_print_status(philo, DEAD);
+	if (elap >= philo->data->time_to_die)
 		return (true);
-	}
 	return (false);
 }
 
@@ -51,15 +47,18 @@ void	ft_monitor(void *data)
 	while (!finish_simulation(dt))
 	{
 		i = -1;
-		while (++i < dt->nbr_philos && !finish_simulation(dt))
+		while (++i < dt->nbr_philos)
 		{
 			if (is_died(&dt->philos[i]))
 			{
 				set_bool(&dt->end_sml_mtx, &dt->end_simulation, true);
+				ft_print_status(&dt->philos[i], DEAD);
+				return ;
 			}
-			if (all_philos_ate(data))
+			if (!finish_simulation(dt) && all_philos_ate(data))
 			{
 				set_bool(&dt->end_sml_mtx, &dt->end_simulation, true);
+				return ;
 			}
 		}
 	}

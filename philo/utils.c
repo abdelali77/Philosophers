@@ -49,7 +49,11 @@ int	ft_usleep(size_t milliseconds, t_data *data)
 		return (0);
 	start = get_curr_time();
 	while ((get_curr_time() - start) < milliseconds)
+	{
 		usleep(500);
+		if (finish_simulation(data))
+			break;
+	}
 	return (0);
 }
 
@@ -62,13 +66,6 @@ void	ft_clean(t_data *data)
 	{
 		pthread_mutex_destroy(&data->philos[i].last_eat_mtx);
 		pthread_mutex_destroy(&data->philos[i].full_mtx);
-	}
-	i = -1;
-	while (++i < data->nbr_philos)
-	{
-		pthread_mutex_destroy(&data->philos[i].left_fork->fork);
-		pthread_mutex_destroy(&data->philos[i].right_fork->fork);
-		pthread_mutex_destroy(&data->forks[i].fork);
 	}
 	pthread_mutex_destroy(&data->sync_mtx);
 	pthread_mutex_destroy(&data->start_mtx);

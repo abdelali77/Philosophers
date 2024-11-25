@@ -18,10 +18,12 @@ void	*routine_one(void *data)
 	long	timestamp;
 
 	philo = (t_philo *)data;
+	timestamp = get_curr_time() - philo->data->start_simulation;
+	printf(""BOLD"%ld"RESET" %d has taken a fork\n", timestamp, philo->philo_id);
 	ft_usleep(philo->data->time_to_die, philo->data);
 	timestamp = get_curr_time() - philo->data->start_simulation;
 	printf(""BOLD"%ld"RESET" %d "RED"died"RESET"\n", timestamp, philo->philo_id);
-	return (NULL);
+	return (philo);
 }
 
 void	one_philo(t_data *data)
@@ -36,8 +38,7 @@ void	*routine(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	if (get_bool(&philo->full_mtx, &philo->is_full)
-		|| finish_simulation(philo->data))
+	if (finish_simulation(philo->data) || get_bool(&philo->full_mtx, &philo->is_full))
 		return (philo);
 	while (!get_bool(&philo->data->sync_mtx, &philo->data->sync_philos))
 		;
@@ -45,9 +46,6 @@ void	*routine(void *data)
 		ft_sleeping(philo);
 	while (!finish_simulation(philo->data))
 	{
-		if (get_bool(&philo->full_mtx, &philo->is_full)
-			|| finish_simulation(philo->data))
-			return (philo);
 		ft_thinking(philo);
 		ft_eat(philo);
 		ft_sleeping(philo);
@@ -68,10 +66,10 @@ void	dinner_start(t_data *data)
 	}
 	else
 	{
+		data->start_simulation = get_curr_time();
 		while (++i < data->nbr_philos)
 			pthread_create(&data->philos[i].thread, NULL,
 				routine, &data->philos[i]);
-		data->start_simulation = get_curr_time();
 		set_bool(&data->sync_mtx, &data->sync_philos, true);
 	}
 	ft_monitor(data);

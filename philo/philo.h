@@ -103,5 +103,6 @@ void	ft_monitor(void *data);
 void	ft_sleeping(t_philo *philo);
 void	ft_thinking(t_philo *philo);
 void	ft_clean(t_data *data);
+bool	is_died(t_philo *philo);
 
 #endif
