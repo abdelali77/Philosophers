@@ -21,17 +21,13 @@ void	ft_eat(t_philo *philo)
 	ft_print_status(philo, TAKE);
 	pthread_mutex_lock(&philo->left_fork->fork);
 	ft_print_status(philo, TAKE);
-	if (!finish_simulation(philo->data)
-		&& !get_bool(&philo->full_mtx, &philo->is_full))
-	{
-		philo->meals_counter++;
-		ft_print_status(philo, EAT);
-		ft_usleep(philo->data->time_to_eat, philo->data);
-		set_long(&philo->last_eat_mtx, &philo->last_eat_time, get_curr_time());
-		if (philo->data->meals_needed > 0
-			&& philo->meals_counter == philo->data->meals_needed)
-			set_bool(&philo->full_mtx, &philo->is_full, true);
-	}
+	philo->meals_counter++;
+	ft_print_status(philo, EAT);
+	ft_usleep(philo->data->time_to_eat, philo->data);
+	set_long(&philo->last_eat_mtx, &philo->last_eat_time, get_curr_time());
+	if (philo->data->meals_needed > 0
+		&& philo->meals_counter == philo->data->meals_needed)
+		set_bool(&philo->full_mtx, &philo->is_full, true);
 	pthread_mutex_unlock(&philo->right_fork->fork);
 	pthread_mutex_unlock(&philo->left_fork->fork);
 }
