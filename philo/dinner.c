@@ -70,7 +70,6 @@ void	dinner_start(t_data *data)
 		data->start_simulation = get_curr_time();
 		while (++i < data->nbr_philos)
 			pthread_create(&data->philos[i].thread, NULL,
-			
 				routine, &data->philos[i]);
 		set_bool(&data->sync_mtx, &data->sync_philos, true);
 	}
