@@ -11,12 +11,9 @@ HEADER = philo.h
 SRCS = data_init.c philo.c utils.c dinner.c \
 	   status.c set_get.c monitor.c \
 
-OBJ_DIR = objs/
+OBJS = $(SRCS:.c=.o)
 
-OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
-
-$(OBJ_DIR)%.o: %.c $(HEADER)
-	@mkdir -p $(dir $@)
+%.o: %.c $(HEADER)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
@@ -26,10 +23,12 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)[files compiled]$(NC)"
 
 clean:
-	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJS)
 
 fclean: clean
 	@rm -rf $(NAME)
 	@echo "$(YELLOW)[files cleaned]$(NC)"
 
 re: fclean all
+
+.PHONY: all clean fclean re

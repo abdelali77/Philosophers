@@ -47,9 +47,9 @@ void	*routine(void *data)
 		ft_sleeping(philo);
 	while (!finish_simulation(philo->data))
 	{
-		ft_thinking(philo);
 		ft_eat(philo);
 		ft_sleeping(philo);
+		ft_thinking(philo);
 	}
 	return (philo);
 }
@@ -70,6 +70,7 @@ void	dinner_start(t_data *data)
 		data->start_simulation = get_curr_time();
 		while (++i < data->nbr_philos)
 			pthread_create(&data->philos[i].thread, NULL,
+			
 				routine, &data->philos[i]);
 		set_bool(&data->sync_mtx, &data->sync_philos, true);
 	}
