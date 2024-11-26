@@ -38,7 +38,8 @@ void	*routine(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	if (finish_simulation(philo->data) || get_bool(&philo->full_mtx, &philo->is_full))
+	if (finish_simulation(philo->data)
+		|| get_bool(&philo->full_mtx, &philo->is_full))
 		return (philo);
 	while (!get_bool(&philo->data->sync_mtx, &philo->data->sync_philos))
 		;

@@ -14,13 +14,15 @@
 
 void	ft_eat(t_philo *philo)
 {
-	if (finish_simulation(philo->data) || get_bool(&philo->full_mtx, &philo->is_full))
+	if (finish_simulation(philo->data)
+		|| get_bool(&philo->full_mtx, &philo->is_full))
 		return ;
 	pthread_mutex_lock(&philo->right_fork->fork);
 	ft_print_status(philo, TAKE);
 	pthread_mutex_lock(&philo->left_fork->fork);
 	ft_print_status(philo, TAKE);
-	if (!finish_simulation(philo->data) && !get_bool(&philo->full_mtx, &philo->is_full))
+	if (!finish_simulation(philo->data)
+		&& !get_bool(&philo->full_mtx, &philo->is_full))
 	{
 		philo->meals_counter++;
 		ft_print_status(philo, EAT);
@@ -62,16 +64,16 @@ void	ft_print_status(t_philo *philo, t_status status)
 		return ;
 	}
 	if (status == EAT)
-		printf("%ld "BOLD"%d"RESET" is eating\n", timestamp, philo->philo_id);
+		printf("%ld %d is eating\n", timestamp, philo->philo_id);
 	else if (status == SLEEP)
-		printf("%ld "BOLD"%d"RESET" is sleeping\n", timestamp, philo->philo_id);
+		printf("%ld %d is sleeping\n", timestamp, philo->philo_id);
 	else if (status == THINK)
-		printf("%ld "BOLD"%d"RESET" is thinking\n", timestamp, philo->philo_id);
+		printf("%ld %d is thinking\n", timestamp, philo->philo_id);
 	else if (status == TAKE)
-		printf("%ld "BOLD"%d"RESET" has taken a fork\n",
+		printf("%ld %d has taken a fork\n",
 			timestamp, philo->philo_id);
 	else if (status == DEAD)
-		printf("%ld "BOLD"%d"RESET" "RED"died"RESET"\n",
+		printf("%ld %d "RED"died"RESET"\n",
 			timestamp, philo->philo_id);
 	pthread_mutex_unlock(&philo->data->print_mtx);
 }

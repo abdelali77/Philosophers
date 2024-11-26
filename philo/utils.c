@@ -52,7 +52,7 @@ int	ft_usleep(size_t milliseconds, t_data *data)
 	{
 		usleep(500);
 		if (finish_simulation(data))
-			break;
+			break ;
 	}
 	return (0);
 }
