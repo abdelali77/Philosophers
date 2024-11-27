@@ -8,7 +8,7 @@ NC=\033[0m
 
 HEADER = philo.h
 
-SRCS = data_init.c philo.c utils.c dinner.c \
+SRCS = data_init.c philo.c utils.c routine.c \
 	   status.c set_get.c monitor.c \
 
 OBJS = $(SRCS:.c=.o)
