@@ -27,7 +27,7 @@ int	main(int ac, char **av)
 			ft_clean(&data);
 			return (printf(RED"at least one meal needed\n"RESET), 1);
 		}
-		dinner_start(&data);
+		simulation(&data);
 		ft_clean(&data);
 	}
 	else

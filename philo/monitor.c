@@ -38,26 +38,24 @@ bool	all_philos_ate(t_data *data)
 	return (true);
 }
 
-void	ft_monitor(void *data)
+void	ft_monitor(t_data *data)
 {
-	t_data	*dt;
 	int		i;
 
-	dt = (t_data *)data;
-	while (!finish_simulation(dt))
+	while (!finish_simulation(data))
 	{
 		i = -1;
-		while (++i < dt->nbr_philos)
+		while (++i < data->nbr_philos)
 		{
-			if (is_died(&dt->philos[i]))
+			if (is_died(&data->philos[i]))
 			{
-				set_bool(&dt->end_sml_mtx, &dt->end_simulation, true);
-				ft_print_status(&dt->philos[i], DEAD);
+				set_bool(&data->end_sml_mtx, &data->end_simulation, true);
+				ft_print_status(&data->philos[i], DEAD);
 				return ;
 			}
-			if (!finish_simulation(dt) && all_philos_ate(data))
+			if (!finish_simulation(data) && all_philos_ate(data))
 			{
-				set_bool(&dt->end_sml_mtx, &dt->end_simulation, true);
+				set_bool(&data->end_sml_mtx, &data->end_simulation, true);
 				return ;
 			}
 		}
