@@ -29,11 +29,12 @@ bool	all_philos_ate(t_data *data)
 {
 	int	i;
 
-	i = -1;
-	while (++i < data->nbr_philos)
+	i = 0;
+	while (i < data->nbr_philos)
 	{
 		if (!get_bool(&data->philos[i].full_mtx, &data->philos[i].is_full))
 			return (false);
+		i++;
 	}
 	return (true);
 }
@@ -44,8 +45,8 @@ void	ft_monitor(t_data *data)
 
 	while (!finish_simulation(data))
 	{
-		i = -1;
-		while (++i < data->nbr_philos)
+		i = 0;
+		while (i < data->nbr_philos)
 		{
 			if (is_died(&data->philos[i]))
 			{
@@ -58,6 +59,7 @@ void	ft_monitor(t_data *data)
 				set_bool(&data->end_sml_mtx, &data->end_simulation, true);
 				return ;
 			}
+			i++;
 		}
 	}
 }

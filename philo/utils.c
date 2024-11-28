@@ -61,11 +61,12 @@ void	ft_clean(t_data *data)
 {
 	int	i;
 
-	i = -1;
-	while (++i < data->nbr_philos)
+	i = 0;
+	while (i < data->nbr_philos)
 	{
 		pthread_mutex_destroy(&data->philos[i].last_eat_mtx);
 		pthread_mutex_destroy(&data->philos[i].full_mtx);
+		i++;
 	}
 	pthread_mutex_destroy(&data->sync_mtx);
 	pthread_mutex_destroy(&data->start_mtx);

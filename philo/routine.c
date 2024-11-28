@@ -19,10 +19,10 @@ void	*routine_one(void *data)
 
 	philo = (t_philo *)data;
 	timestamp = get_curr_time() - philo->data->start_simulation;
-	printf(""BOLD"%ld"RESET" %d has taken a fork\n", timestamp, philo->philo_id);
+	printf("%ld %d has taken a fork\n", timestamp, philo->philo_id);
 	ft_usleep(philo->data->time_to_die, philo->data);
 	timestamp = get_curr_time() - philo->data->start_simulation;
-	printf(""BOLD"%ld"RESET" %d "RED"died"RESET"\n", timestamp, philo->philo_id);
+	printf("%ld %d "RED"died"RESET"\n", timestamp, philo->philo_id);
 	return (NULL);
 }
 

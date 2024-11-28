@@ -41,8 +41,8 @@ void	philo_init(t_data *data)
 	int		i;
 	t_philo	*philo;
 
-	i = -1;
-	while (++i < data->nbr_philos)
+	i = 0;
+	while (i < data->nbr_philos)
 	{
 		philo = data->philos + i;
 		philo->data = data;
@@ -57,6 +57,7 @@ void	philo_init(t_data *data)
 			philo->right_fork = &data->forks[0];
 		else
 			philo->right_fork = &data->forks[i + 1];
+		i++;
 	}
 }
 
@@ -64,7 +65,7 @@ bool	data_init(t_data *data)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	data->end_simulation = false;
 	data->sync_philos = false;
 	data->start_simulation = 0;
@@ -78,10 +79,11 @@ bool	data_init(t_data *data)
 	data->forks = malloc(data->nbr_philos * sizeof(t_fork));
 	if (!data->forks)
 		return (printf("Malloc ERROR\n"), false);
-	while (++i < data->nbr_philos)
+	while (i < data->nbr_philos)
 	{
 		data->forks[i].fork_id = i;
 		pthread_mutex_init(&data->forks[i].fork, NULL);
+		i++;
 	}
 	philo_init(data);
 	return (true);
