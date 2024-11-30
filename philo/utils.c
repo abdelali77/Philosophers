@@ -69,7 +69,6 @@ void	ft_clean(t_data *data)
 		i++;
 	}
 	pthread_mutex_destroy(&data->sync_mtx);
-	pthread_mutex_destroy(&data->start_mtx);
 	pthread_mutex_destroy(&data->end_sml_mtx);
 	pthread_mutex_destroy(&data->print_mtx);
 	free(data->philos);

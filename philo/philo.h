@@ -24,7 +24,6 @@
 # define RED "\033[1;31m"
 # define YELLOW "\033[0;33m"
 # define RESET "\033[0m"
-# define BOLD "\033[1m"
 
 typedef struct s_data	t_data;
 
@@ -51,7 +50,6 @@ typedef enum e_status
 typedef struct s_fork
 {
 	pthread_mutex_t	fork;
-	int				fork_id;
 }				t_fork;
 
 typedef struct s_philo
@@ -79,7 +77,6 @@ struct s_data
 	bool			end_simulation;
 	bool			sync_philos;
 	pthread_mutex_t	sync_mtx;
-	pthread_mutex_t	start_mtx;
 	pthread_mutex_t	end_sml_mtx;
 	pthread_mutex_t	print_mtx;
 	t_fork			*forks;

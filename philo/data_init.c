@@ -70,7 +70,6 @@ bool	data_init(t_data *data)
 	data->sync_philos = false;
 	data->start_simulation = 0;
 	pthread_mutex_init(&data->sync_mtx, NULL);
-	pthread_mutex_init(&data->start_mtx, NULL);
 	pthread_mutex_init(&data->end_sml_mtx, NULL);
 	pthread_mutex_init(&data->print_mtx, NULL);
 	data->philos = malloc(data->nbr_philos * sizeof(t_philo));
@@ -81,7 +80,6 @@ bool	data_init(t_data *data)
 		return (printf("Malloc ERROR\n"), false);
 	while (i < data->nbr_philos)
 	{
-		data->forks[i].fork_id = i;
 		pthread_mutex_init(&data->forks[i].fork, NULL);
 		i++;
 	}

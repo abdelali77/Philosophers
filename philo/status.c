@@ -52,8 +52,7 @@ void	ft_print_status(t_philo *philo, t_status status)
 	long	timestamp;
 
 	pthread_mutex_lock(&philo->data->print_mtx);
-	timestamp = get_curr_time() - get_long(&philo->data->start_mtx,
-			&philo->data->start_simulation);
+	timestamp = get_curr_time() - philo->data->start_simulation;
 	if (finish_simulation(philo->data) && status != DEAD)
 	{
 		pthread_mutex_unlock(&philo->data->print_mtx);
